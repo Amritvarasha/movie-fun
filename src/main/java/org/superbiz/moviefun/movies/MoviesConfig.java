@@ -1,6 +1,7 @@
 package org.superbiz.moviefun.movies;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -18,9 +19,11 @@ public class MoviesConfig {
 
     @Bean
     public DataSource moviesDataSource(DatabaseServiceCredentials serviceCredentials) {
+        HikariDataSource hikariDataSource=new HikariDataSource();
         MysqlDataSource dataSource = new MysqlDataSource();
         dataSource.setURL(serviceCredentials.jdbcUrl("movies-mysql"));
-        return dataSource;
+        hikariDataSource.setDataSource(dataSource);
+        return hikariDataSource;
     }
     @Bean
     HibernateJpaVendorAdapter jpaVendorAdapter() {
@@ -31,9 +34,8 @@ public class MoviesConfig {
         return jpaVendorAdapter;
     }
 
-
     @Bean
-    LocalContainerEntityManagerFactoryBean albumsEntityManagerFactory(DataSource moviesDataSource, HibernateJpaVendorAdapter jpaVendorAdapter) {
+    LocalContainerEntityManagerFactoryBean moviesEntityManagerFactory(DataSource moviesDataSource, HibernateJpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(moviesDataSource);
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
@@ -43,11 +45,8 @@ public class MoviesConfig {
     }
 
     @Bean
-    PlatformTransactionManager movieTransactionManager(EntityManagerFactory movieEntityManagerFactory) {
-        return new JpaTransactionManager(movieEntityManagerFactory);
+    PlatformTransactionManager movieTransactionManager(EntityManagerFactory moviesEntityManagerFactory) {
+        return new JpaTransactionManager(moviesEntityManagerFactory);
     }
-
-
-
 
 }

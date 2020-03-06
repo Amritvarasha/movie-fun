@@ -29,7 +29,7 @@ import java.util.List;
 @Repository
 public class MoviesBean {
 
-    @PersistenceContext(name = "movies")
+    @PersistenceContext(unitName = "movies")
     private EntityManager entityManager;
 
     public Movie find(Long id) {

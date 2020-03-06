@@ -13,7 +13,7 @@ import org.superbiz.moviefun.DatabaseServiceCredentials;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 public class AlbumsConfig {
 
     @Bean
@@ -22,7 +22,7 @@ public class AlbumsConfig {
         dataSource.setURL(serviceCredentials.jdbcUrl("albums-mysql"));
         return dataSource;
     }
-
+/*
     @Bean
     HibernateJpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
@@ -31,7 +31,7 @@ public class AlbumsConfig {
         jpaVendorAdapter.setGenerateDdl(true);
         return jpaVendorAdapter;
     }
-
+*/
 
     @Bean
     LocalContainerEntityManagerFactoryBean albumsEntityManagerFactory(DataSource albumsDataSource, HibernateJpaVendorAdapter jpaVendorAdapter) {
