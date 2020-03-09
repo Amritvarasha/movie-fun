@@ -91,4 +91,15 @@ public class Album implements Serializable {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    @Override
+    public String toString() {
+        return "Album{" +
+                "id=" + id +
+                ", artist='" + artist + '\'' +
+                ", title='" + title + '\'' +
+                ", year=" + year +
+                ", rating=" + rating +
+                '}';
+    }
 }
